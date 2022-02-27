@@ -76,6 +76,10 @@ def game_menu():
             print("Sorry, I don't andarsand you. Please, try again!")
 
 
+def registration_interface():
+    user_name = input("Enter you user_name: ")
+    #user_name_flag = check_the_existence_of_the_user(user_name)
+
 if __name__ == '__main__':
     game_menu()
 
