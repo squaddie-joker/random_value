@@ -1,4 +1,7 @@
 import random
+from db_api import add_user_to_the_table
+
+path_to_db = 'game_db.db'
 
 def compare_values(random_value : int, user_value : int) -> int:
     result = random_value - int(user_value)
@@ -60,6 +63,7 @@ def game_round(name):
 def game_menu():
     print("Hello!\nWelcome to my game!\n")
     user_name = input("So, what is your name?\n_")
+    add_user_to_the_table('users', user_name, path_to_db)
     print(f"Nice to meet you, {user_name}!")
     while True:
         answe = input("Do you want to play with me? (Y/n)")
