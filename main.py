@@ -1,17 +1,9 @@
 import random
 
-def compare_values(random_value : int, user_value : int):
-    int_user_value = int(user_value)
-    if random_value == int_user_value:
-        print(f'Congratulations on your victory! {str(int_user_value)} is really the number I intended')
-        return True
-    elif random_value < int_user_value:
-        print(f'No, my value is less that your one. Pleas, try again.')
-        return False
-    else:
-        print(f'No, my value is more that your one. Pleas, try again.')
-        return False
-
+def compare_values(random_value : int, user_value : int) -> int:
+    result = random_value - int(user_value)
+    return result
+    
 
 def check_the_value(value):
     try:
@@ -23,14 +15,19 @@ def check_the_value(value):
 
 
 def pritn_hello_massege(name='user'):
-    hello_string = f"Hello, {name}! Now lets to play.\nI've made a number, so, try to guess it!"
+    hello_string = f"\nOk, {name}! Now lets to play.\nI've made a number, so, try to guess it!\n"
     print(hello_string)
-    
+
+
+def print_win_message(user_value : int, count : int):
+    win_string = f"You win! My hidden number is {str(user_value)}! You did it on the {count} try!"
+    print(win_string)
+
 
 def game_round(name):
     pritn_hello_massege(name)
 
-    total_count = 10
+    total_count = 12
     count = 1
     random_number = random.randint(0, 1000)
 
@@ -41,13 +38,41 @@ def game_round(name):
             print('The input value must be an integer! Try again!')
             continue
 
-        if compare_values(random_number, user_value):
+        check_flag = compare_values(random_number, user_value)
+        if check_flag == 0:
+            print_win_message(user_value, count)
+            break
+        elif check_flag > 0:
+            print(f"No, my value is more than {user_value}")
+        else:
+            print(f"No, my value is less than {user_value}")
+
+        count+=1
+        if count <= total_count:
+            print("Try again!")
+        if count == total_count:
+            print("It's your last attempt!")
+        if count > total_count:
+            print("You have exhausted all your attempts!")
+            break
+
+
+def game_menu():
+    print("Hello!\nWelcome to my game!\n")
+    user_name = input("So, what is your name?\n_")
+    print(f"Nice to meet you, {user_name}!")
+    while True:
+        answe = input("Do you want to play with me? (Y/n)")
+        if answe.upper() == 'Y':
+            game_round(user_name)
+        elif answe.lower() == 'n':
+            print(f'Good bay, {user_name}!')
             break
         else:
-            count+=1
+            print("Sorry, I don't andarsand you. Please, try again!")
 
 
 if __name__ == '__main__':
-    game_round('User1')
+    game_menu()
 
 
