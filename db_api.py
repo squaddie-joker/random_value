@@ -38,7 +38,7 @@ def execute_select_query(connection : sqlite3.Connection, query : str):
 
     try:
         cursor = connection.cursor()
-        result = cursor.execute(query).fetchall()
+        result = cursor.execute(query)
 
     except Error as err:
         print(err)
@@ -49,7 +49,7 @@ def check_the_existence_of_user_in_table(connection : sqlite3.Connection, user_n
     query = f"""
     SELECT (count(user_name)>=1) from {table_name} where user_name = "{user_name}"
     """
-    result = execute_select_query(connection, query)
+    result = execute_select_query(connection, query).fetchone()[0]
     
     if result[0] == 1:
         return True
