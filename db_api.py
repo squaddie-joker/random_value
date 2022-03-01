@@ -71,5 +71,25 @@ def add_gameround_to_db(user_name : str, attempts_count : int, insert_game_query
     return result
 
 
+def check_users_creads(user_name : str, user_password : str, check_query = IS_USER_IN_DB) -> bool:
+    flag = False
+    try:
+        connection = create_connection()
+        query = check_query + f"'{user_name}' AND password = '{user_password}'"
+        cursor = execute_query(connection, query)
+        if cursor:
+            result = cursor.fetchone()[0]
+            if result == 1:
+                flag = True
+
+    except Error as err:
+        print(err) 
+
+    return flag
+
+
 if __name__ == "__main__":
-    pass
+    user = User('Alex', 'Alex@mail.ru', '123')
+    add_user_to_db(user)
+    flag = check_users_creads('Alex', '1234')
+    print(flag)
