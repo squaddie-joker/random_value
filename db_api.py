@@ -58,10 +58,10 @@ def add_user_to_db(user : User, insert_user_query = INSERT_USER_QUERY, create_ta
     return result
 
 
-def add_gameround_to_db(user_name : str, attempts_count : int, insert_game_query = INSERT_GAME_QUERY, create_games_table = CREATE_GAMES_TABLE):
+def add_gameround_to_db(user_name : str, attempts_count : int, victory : int, insert_game_query = INSERT_GAME_QUERY, create_games_table = CREATE_GAMES_TABLE):
     try:
         connection = create_connection()
-        query = insert_game_query + f"'{user_name}'), {attempts_count})"
+        query = insert_game_query + f"'{user_name}'), {attempts_count}, {victory})"
         execute_query(connection, create_games_table)
         execute_query(connection, query)
         result = True
@@ -91,5 +91,4 @@ def check_users_creads(user_name : str, user_password : str, check_query = IS_US
 if __name__ == "__main__":
     user = User('Alex', 'Alex@mail.ru', '123')
     add_user_to_db(user)
-    flag = check_users_creads('Alex', '1234')
-    print(flag)
+    add_gameround_to_db('Alex', 66, 1)
