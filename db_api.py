@@ -28,11 +28,12 @@ def execute_query(connection : sqlite3.Connection, query : str):
     return result
 
 
-def check_the_user_in_db(user_name : str, check_query = IS_USER_IN_DB) -> bool:
+def check_the_user_in_db(user_name : str, check_query = IS_USER_IN_DB, create_table_query = CREATE_USERS_TABLE) -> bool:
     result = False
     try:
         connection = create_connection()
         query = check_query + f"'{user_name}'"
+        execute_query(create_table_query)
         cursor = execute_query(connection, query)
         if cursor:
             result = cursor.fetchone()[0]
