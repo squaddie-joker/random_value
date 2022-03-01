@@ -1,5 +1,6 @@
 import random
-from db_api import add_user_to_the_table
+from db_api import add_user_to_db, check_the_user_in_db
+from classes import User
 
 path_to_db = 'game_db.db'
 
@@ -61,10 +62,17 @@ def game_round(name):
 
 
 def game_menu():
-    print("Hello!\nWelcome to my game!\n")
-    user_name = input("So, what is your name?\n_")
-    add_user_to_the_table('users', user_name, path_to_db)
-    print(f"Nice to meet you, {user_name}!")
+
+    # Авторизация и регистрация.
+    register_flag = False
+    while not register_flag:
+        print("Для доступа к игре, пожалуйста, авторизуйтесь или зарегистрируйтесь!")
+        register_flag, user_name = registration_interface()
+
+
+    # Начало игры авторизованным пользователем.
+    print(f"Hello, {user_name}!\nWelcome to my game!\n")
+ 
     while True:
         answe = input("Do you want to play with me? (Y/n)")
         if answe.upper() == 'Y':
@@ -77,8 +85,43 @@ def game_menu():
 
 
 def registration_interface():
-    user_name = input("Enter you user_name: ")
-    #user_name_flag = check_the_existence_of_the_user(user_name)
+    flag = False
+    user_name = None
+
+    reg_or_auth_flag = input('Вы хотите зарегистрироваться или авторизоваться (R/A)?')
+    if reg_or_auth_flag.upper() == 'R':
+        flag, user_name = registration()
+    elif reg_or_auth_flag.upper() == 'A':
+        pass
+        # авторизация
+
+    return flag, user_name
+ 
+def registration():
+    user_name = None
+    try:
+        while True:
+            user_name = input('Введите Ваше имя ->')
+            if check_the_user_in_db(user_name):
+                print('Это имя уже занято, попробуйте еще раз!')
+                continue
+            break
+
+        user_email = input('Введите Ваше электронный адрес ->')
+        user_password = input('Придумайте пароль для входа ->')
+
+        new_user = User(user_name, user_email, user_password)
+        add_user_to_db(new_user)
+        return True, user_name
+
+    except Exception as err:
+        print(err)
+        print("Что-то пошло не так. Пожалуйста, повторите попытку!")
+        return False, user_name
+
+            
+        
+
 
 if __name__ == '__main__':
     game_menu()
