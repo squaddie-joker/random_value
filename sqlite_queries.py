@@ -34,6 +34,6 @@ INSERT_USER_QUERY = f"""
 
 INSERT_GAME_QUERY = f"""
     INSERT INTO
-    {GAMES_TABLE_NAME} (date_of_the_game, user_id, count_of_attempts)
+    {GAMES_TABLE_NAME} (date_of_the_game, user_id, count_of_attempts, victory)
     VALUES
     (datetime('now'), (select id from {USER_TABLE_NAME} where user_name = """
