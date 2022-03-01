@@ -33,7 +33,7 @@ def check_the_user_in_db(user_name : str, check_query = IS_USER_IN_DB, create_ta
     try:
         connection = create_connection()
         query = check_query + f"'{user_name}'"
-        execute_query(create_table_query)
+        execute_query(connection, create_table_query)
         cursor = execute_query(connection, query)
         if cursor:
             result = cursor.fetchone()[0]
