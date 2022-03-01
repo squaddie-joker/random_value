@@ -1,8 +1,7 @@
 import random
-from db_api import add_user_to_db, check_the_user_in_db, check_users_creads
+from db_api import add_gameround_to_db, add_user_to_db, check_the_user_in_db, check_users_creads
 from classes import User
 
-path_to_db = 'game_db.db'
 
 def compare_values(random_value : int, user_value : int) -> int:
     result = random_value - int(user_value)
@@ -45,6 +44,7 @@ def game_round(name):
         check_flag = compare_values(random_number, user_value)
         if check_flag == 0:
             print_win_message(user_value, count)
+            add_gameround_to_db(name, count, 1)
             break
         elif check_flag > 0:
             print(f"No, my value is more than {user_value}")
@@ -58,6 +58,7 @@ def game_round(name):
             print("It's your last attempt!")
         if count > total_count:
             print("You have exhausted all your attempts!")
+            add_gameround_to_db(name, count, 0)
             break
 
 
@@ -140,7 +141,7 @@ def autorisation():
            
     return flag, user_name
         
-        
+
 if __name__ == '__main__':
     game_menu()
 
