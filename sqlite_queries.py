@@ -8,7 +8,7 @@ CREATE_GAMES_TABLE = f"""
         user_id           INTEGER  NOT NULL,
         count_of_attempts INTEGER  NOT NULL,
         date_of_the_game  TEXT     NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES {USER_TABLE_NAME}(id)
+        FOREIGN KEY (user_id) REFERENCES {USER_TABLE_NAME}(id) ON DELETE CASCADE
     )
     """
 
