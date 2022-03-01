@@ -71,7 +71,5 @@ def add_gameround_to_db(user_name : str, attempts_count : int, insert_game_query
     return result
 
 
-
 if __name__ == "__main__":
-    new_user = User('Alex', 'laa451@mail.ru', 'qwerty123')
-    add_gameround_to_db(new_user.user_name, 10)
+    pass
