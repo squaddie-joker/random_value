@@ -1,5 +1,5 @@
 import random
-from db_api import add_user_to_db, check_the_user_in_db
+from db_api import add_user_to_db, check_the_user_in_db, check_users_creads
 from classes import User
 
 path_to_db = 'game_db.db'
@@ -92,11 +92,11 @@ def registration_interface():
     if reg_or_auth_flag.upper() == 'R':
         flag, user_name = registration()
     elif reg_or_auth_flag.upper() == 'A':
-        pass
-        # авторизация
+        flag, user_name = autorisation()
 
     return flag, user_name
  
+
 def registration():
     user_name = None
     try:
@@ -120,9 +120,27 @@ def registration():
         return False, user_name
 
             
+def autorisation():
+    flag = False
+    user_name = None
+    while not flag:
+        user_name = input("Введите Ваше имя -> ")
+        user_password = input("Введите пароль -> ")
+        if not check_users_creads(user_name, user_password):
+            print('\nНеверное имя пользователя или пароль! Попробуйте еще раз или выйдите в меню!\n')
+            again_flag = input("Попробовать авторизоваться повторно? (Y/n) -> ")
+            if again_flag.upper() == 'Y':
+                continue
+            else: 
+                break
+        else:
+            flag = True
+            break
+
+           
+    return flag, user_name
         
-
-
+        
 if __name__ == '__main__':
     game_menu()
 
