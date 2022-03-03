@@ -37,3 +37,16 @@ INSERT_GAME_QUERY = f"""
     {GAMES_TABLE_NAME} (date_of_the_game, user_id, count_of_attempts, victory)
     VALUES
     (datetime('now'), (select id from {USER_TABLE_NAME} where user_name = """
+
+
+def create_statistics_query(user_name, user_table_name = USER_TABLE_NAME, games_table_name = GAMES_TABLE_NAME):
+    query = f"""
+    SELECT 
+    (SELECT count(id) from {games_table_name}
+        WHERE user_id = (SELECT id from {user_table_name}  WHERE user_name = '{user_name}') and victory = 1)
+    /
+    (SELECT count(id) from {games_table_name}
+        WHERE user_id = (SELECT id from {user_table_name}  WHERE user_name = '{user_name}'))
+    *100
+    """
+    return query
