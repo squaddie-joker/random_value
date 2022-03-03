@@ -94,7 +94,8 @@ def get_statistics(user_name : str) -> int:
     try:
         connection = create_connection()
         query = create_statistics_query(user_name)
-        result = execute_query(connection, query).fetchone()[0]
+        answer = execute_query(connection, query).fetchone()
+        result = str(int(answer[0]/answer[1]*100))
     except Error as err:
         print(err)
 
