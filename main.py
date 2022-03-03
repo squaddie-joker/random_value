@@ -1,5 +1,5 @@
 import random
-from db_api import add_gameround_to_db, add_user_to_db, check_the_user_in_db, check_users_creads
+from db_api import add_gameround_to_db, add_user_to_db, check_the_user_in_db, check_users_creads, get_statistics
 from classes import User
 
 
@@ -80,6 +80,8 @@ def game_menu():
             game_round(user_name)
         elif answe.lower() == 'n':
             print(f'Good bay, {user_name}!')
+            win_statistics = get_statistics(user_name)
+            print(f"You has {win_statistics}% of wins")
             break
         else:
             print("Sorry, I don't andarsand you. Please, try again!")
