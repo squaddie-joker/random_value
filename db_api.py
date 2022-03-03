@@ -89,7 +89,19 @@ def check_users_creads(user_name : str, user_password : str, check_query = IS_US
     return flag
 
 
+def get_statistics(user_name : str) -> int:
+    result = None
+    try:
+        connection = create_connection()
+        query = create_statistics_query(user_name)
+        result = execute_query(connection, query).fetchone()[0]
+    except Error as err:
+        print(err)
+
+    return result
+
 if __name__ == "__main__":
-    user = User('Alex', 'Alex@mail.ru', '123')
-    add_user_to_db(user)
-    add_gameround_to_db('Alex', 66, 1)
+    user_name = 'Александр'
+    stat = get_statistics(user_name)
+    print(stat)
+    
